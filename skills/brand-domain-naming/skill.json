@@ -1,0 +1,13 @@
+{
+  "id": "brand-domain-naming",
+  "kind": "skill",
+  "version": 1,
+  "runtimePackages": ["python3"],
+  "supportedAgents": ["codex"],
+  "helperTools": [],
+  "mcpServers": [],
+  "outputs": {
+    "skillPath": "skills/brand-domain-naming",
+    "skillFile": "skills/brand-domain-naming/SKILL.md"
+  }
+}

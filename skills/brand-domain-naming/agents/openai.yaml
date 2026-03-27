@@ -1,0 +1,4 @@
+interface:
+  display_name: "Brand & Domain Naming"
+  short_description: "Generate names and score domains"
+  default_prompt: "Use $brand-domain-naming to generate brandable product names, compare TLD options, and recommend the strongest domain-backed direction."
