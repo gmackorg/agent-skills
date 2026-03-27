@@ -1,0 +1,13 @@
+{
+  "id": "agent-skills-catalog-maintenance",
+  "kind": "skill",
+  "version": 1,
+  "runtimePackages": ["bash", "jq", "findutils"],
+  "supportedAgents": ["codex", "claude-code"],
+  "helperTools": [],
+  "mcpServers": [],
+  "outputs": {
+    "skillPath": "skills/agent-skills-catalog-maintenance",
+    "skillFile": "skills/agent-skills-catalog-maintenance/SKILL.md"
+  }
+}
