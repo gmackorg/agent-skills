@@ -37,7 +37,6 @@
       "name": "nextjs-saas",
       "skillIds": [
         "nextjs-project-init",
-        "clerk-auth-integration",
         "stripe-payments-integration",
         "saas-turbo-bootstrap",
         "migrate-to-vinext",

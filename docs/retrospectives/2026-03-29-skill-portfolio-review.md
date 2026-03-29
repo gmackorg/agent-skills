@@ -9,11 +9,11 @@
 
 ## Portfolio Snapshot
 
-- total public skills: `31`
+- total public skills: `30`
 - catalog groups: `11`
 - metadata-backed skills: `19`
-- legacy monolithic skills without `skill.json`: `12`
-- long skills at `300+` lines: `7`
+- legacy monolithic skills without `skill.json`: `11`
+- long skills at `300+` lines: `6`
 
 Current catalog groups:
 
@@ -21,7 +21,7 @@ Current catalog groups:
 - `mobile-qa`: `maestro-qa-report`, `maestro-qa`, `react-native-expo-release-readiness`
 - `expo`: `expo-build-validation`, `expo-build-submit`
 - `react`: `react-project-init`, `react-debugging-advanced`, `react-ui-shadcn-tailwind`
-- `nextjs-saas`: `nextjs-project-init`, `clerk-auth-integration`, `stripe-payments-integration`, `saas-turbo-bootstrap`, `migrate-to-vinext`, `nextjs-cloudflare-opennext`, `vinext-cloudflare-hardening`
+- `nextjs-saas`: `nextjs-project-init`, `stripe-payments-integration`, `saas-turbo-bootstrap`, `migrate-to-vinext`, `nextjs-cloudflare-opennext`, `vinext-cloudflare-hardening`
 - `cloudflare`: `cloudflare-workers-bindings-local-dev`, `cloudflare-d1-development`
 - `observability`: `sentry-release-triage`, `posthog-product-instrumentation`
 - `infrastructure`: `hetzner-cloud-ops`, `namecheap-domain-dns-ops`
@@ -31,7 +31,6 @@ Current catalog groups:
 
 Legacy skills still on the older format:
 
-- `clerk-auth-integration`
 - `esp32-project-init`
 - `esp32-wifi-setup`
 - `nextjs-project-init`
@@ -49,7 +48,6 @@ Longest skills:
 - `stripe-payments-integration` (`632` lines)
 - `saas-turbo-bootstrap` (`525` lines)
 - `react-ui-shadcn-tailwind` (`512` lines)
-- `clerk-auth-integration` (`495` lines)
 - `react-debugging-advanced` (`489` lines)
 - `unity-scripting-advanced` (`442` lines)
 - `brand-domain-naming` (`309` lines)
@@ -98,7 +96,6 @@ There is heavy overlap between:
 - `react-project-init`
 - `react-ui-shadcn-tailwind`
 - `nextjs-project-init`
-- `clerk-auth-integration`
 - `stripe-payments-integration`
 - `saas-turbo-bootstrap`
 
@@ -156,16 +153,15 @@ Recommended migration order:
 
 1. `saas-turbo-bootstrap`
 2. `stripe-payments-integration`
-3. `clerk-auth-integration`
-4. `nextjs-project-init`
-5. `react-ui-shadcn-tailwind`
-6. `react-project-init`
-7. `react-debugging-advanced`
-8. `unity-scripting-advanced`
-9. `unity-debug-workflow`
-10. `unity-project-setup`
-11. `esp32-project-init`
-12. `esp32-wifi-setup`
+3. `nextjs-project-init`
+4. `react-ui-shadcn-tailwind`
+5. `react-project-init`
+6. `react-debugging-advanced`
+7. `unity-scripting-advanced`
+8. `unity-debug-workflow`
+9. `unity-project-setup`
+10. `esp32-project-init`
+11. `esp32-wifi-setup`
 
 ### Skills that should stay separate
 
@@ -197,13 +193,6 @@ Best future shape:
   - customer portal / subscription lifecycle
   - Expo or mobile purchase boundary if still needed
 
-#### `clerk-auth-integration`
-
-Best future shape:
-
-- split framework detail into `references/nextjs.md` and `references/expo.md`
-- keep the main skill focused on auth workflow and integration decisions
-
 #### React trio
 
 - `react-project-init`
@@ -223,7 +212,6 @@ Purpose:
 Would compose:
 
 - `nextjs-project-init`
-- `clerk-auth-integration`
 - `stripe-payments-integration`
 - `posthog-product-instrumentation`
 - `sentry-release-triage`
@@ -232,6 +220,7 @@ Why it should exist:
 
 - it replaces the current “everything bagel” role of `saas-turbo-bootstrap`
 - it can stay thin and route into narrower skills
+- it should target a better-auth-style auth layer instead of restoring Clerk-specific coupling
 
 ### 2. `saas-stack-hardening`
 
@@ -241,7 +230,6 @@ Purpose:
 
 Would compose:
 
-- `clerk-auth-integration`
 - `stripe-payments-integration`
 - `posthog-product-instrumentation`
 - `sentry-release-triage`
@@ -249,6 +237,17 @@ Would compose:
 Why it should exist:
 
 - there is currently no public skill that reviews whether the core SaaS stack is coherent after initial setup
+
+### Auth follow-up
+
+Clerk is no longer part of the intended public skill surface.
+
+The remaining Clerk assumptions now live inside older legacy skills, especially:
+
+- [nextjs-project-init](/Volumes/dev/agent-skills/skills/nextjs-project-init/SKILL.md)
+- [saas-turbo-bootstrap](/Volumes/dev/agent-skills/skills/saas-turbo-bootstrap/SKILL.md)
+
+Those should be cleaned up as part of the broader Next / SaaS migration rather than replaced with another auth-vendor-specific public skill immediately.
 
 ### 3. `cloudflare-app-platform-readiness`
 

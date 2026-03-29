@@ -33,7 +33,6 @@
     ],
     "nextjs-saas": [
       "agent-skills:nextjs-project-init",
-      "agent-skills:clerk-auth-integration",
       "agent-skills:stripe-payments-integration",
       "agent-skills:saas-turbo-bootstrap",
       "agent-skills:migrate-to-vinext",
