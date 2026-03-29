@@ -40,7 +40,14 @@
         "clerk-auth-integration",
         "stripe-payments-integration",
         "saas-turbo-bootstrap",
-        "migrate-to-vinext"
+        "migrate-to-vinext",
+        "nextjs-cloudflare-opennext"
+      ]
+    },
+    {
+      "name": "cloudflare",
+      "skillIds": [
+        "cloudflare-workers-bindings-local-dev"
       ]
     },
     {
