@@ -112,6 +112,10 @@ Some existing skills still reflect an older Kiro-style authoring format. They ar
 
 The highest-value additions from here are:
 
-- deeper mobile QA and Maestro coverage
+- Next.js / Cloudflare / vinext workflow coverage
 - a generated merged catalog across public and private repos
 - more public workflow skills harvested from real `smol-agent`, x402, and adjacent repo work
+
+See:
+
+- [docs/cloudflare-next-skill-opportunities.md](/Volumes/dev/agent-skills/docs/cloudflare-next-skill-opportunities.md)

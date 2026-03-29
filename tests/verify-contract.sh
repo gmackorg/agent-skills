@@ -5,6 +5,10 @@ root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 metadata_file="$root/skills/expo-build-validation/skill.json"
 second_metadata_file="$root/skills/expo-build-submit/skill.json"
+validation_skill_file="$root/skills/expo-build-validation/SKILL.md"
+submit_skill_file="$root/skills/expo-build-submit/SKILL.md"
+validation_reference_file="$root/skills/expo-build-validation/references/release-validation-checklist.md"
+submit_reference_file="$root/skills/expo-build-submit/references/submission-sequence.md"
 flake_file="$root/flake.nix"
 module_file="$root/nix/home-manager-module.nix"
 example_module_file="$root/nix/examples/combined-home-manager.nix"
@@ -15,6 +19,10 @@ agent_definition_file="$root/agents/react-frontend/agent.json"
 
 test -f "$metadata_file"
 test -f "$second_metadata_file"
+test -f "$validation_skill_file"
+test -f "$submit_skill_file"
+test -f "$validation_reference_file"
+test -f "$submit_reference_file"
 test -f "$flake_file"
 test -f "$module_file"
 test -f "$example_module_file"
@@ -36,6 +44,19 @@ jq -e '
   (.runtimePackages | index("jq")) != null and
   (.helperTools | index("skill-bootstrap")) != null
 ' "$second_metadata_file" >/dev/null
+
+grep -q '^name: expo-build-validation$' "$validation_skill_file"
+grep -q '^name: expo-build-submit$' "$submit_skill_file"
+
+if rg -q '^(allowed-tools|metadata):' "$validation_skill_file"; then
+  echo "expo-build-validation SKILL.md still contains legacy frontmatter" >&2
+  exit 1
+fi
+
+if rg -q '^(allowed-tools|metadata):' "$submit_skill_file"; then
+  echo "expo-build-submit SKILL.md still contains legacy frontmatter" >&2
+  exit 1
+fi
 
 jq -e '
   .id == "skill-bootstrap" and
