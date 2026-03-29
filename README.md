@@ -119,3 +119,4 @@ The highest-value additions from here are:
 See:
 
 - [docs/cloudflare-next-skill-opportunities.md](/Volumes/dev/agent-skills/docs/cloudflare-next-skill-opportunities.md)
+- [docs/skill-source-inventory.md](/Volumes/dev/agent-skills/docs/skill-source-inventory.md)
