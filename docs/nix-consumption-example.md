@@ -28,3 +28,5 @@ Example Home Manager usage:
   };
 }
 ```
+
+In a real setup, import one public repo and one private repo, then merge them in your machine config rather than treating this reference repo as production content.

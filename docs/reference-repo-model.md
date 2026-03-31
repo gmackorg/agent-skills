@@ -20,6 +20,8 @@ Use this repo as a template for:
 
 Keep real public and private skill content in those repos. Keep this repo small and educational.
 
+If you need to explain the split inside this repo, do it through docs and example branches, not by storing real private material here.
+
 ## What A Reference Repo Should Contain
 
 - a few example skills
@@ -49,3 +51,14 @@ At minimum, demonstrate:
 - `catalog/`
 - `docs/`
 - `flake.nix`
+
+## What Good Reference Examples Teach
+
+Each example should show one clear idea:
+
+- a minimal skill with metadata
+- a skill with a helper script
+- an agent that selects a small set of skills
+- a generated catalog that other runtimes can consume
+
+The examples should be small enough that people can copy them without needing to delete half the repo first.

@@ -46,6 +46,15 @@ For actual use, prefer:
 2. one separate private skills repo
 3. this reference repo only as a pattern to copy or adapt
 
+## Branch Intent
+
+- `main`: the canonical public reference surface
+- `reference`: a matching branch for people who want an explicit reference pointer
+- `private`: documentation and examples for how a private companion repo should work
+
+Because this repo is public, the `private` branch must not contain real private skills.
+It should only describe the split and show the same skeleton in a way that teams can copy.
+
 ## Local Usage
 
 List the example skills:
@@ -76,6 +85,8 @@ flake.nix
 ## Important Docs
 
 - [reference-repo-model.md](/Users/mackieg/.config/superpowers/worktrees/agent-skills/gmackorg-reference-skeleton/docs/reference-repo-model.md)
+- [reference-branch-model.md](/Users/mackieg/.config/superpowers/worktrees/agent-skills/gmackorg-reference-skeleton/docs/reference-branch-model.md)
 - [runtime-integration-model.md](/Users/mackieg/.config/superpowers/worktrees/agent-skills/gmackorg-reference-skeleton/docs/runtime-integration-model.md)
+- [runtime-adoption-guide.md](/Users/mackieg/.config/superpowers/worktrees/agent-skills/gmackorg-reference-skeleton/docs/runtime-adoption-guide.md)
 - [skill-metadata-contract.md](/Users/mackieg/.config/superpowers/worktrees/agent-skills/gmackorg-reference-skeleton/docs/skill-metadata-contract.md)
 - [nix-consumption-example.md](/Users/mackieg/.config/superpowers/worktrees/agent-skills/gmackorg-reference-skeleton/docs/nix-consumption-example.md)
