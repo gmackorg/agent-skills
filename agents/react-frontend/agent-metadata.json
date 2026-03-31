@@ -1,9 +1,0 @@
-{
-  "id": "react-frontend",
-  "kind": "agent",
-  "version": 1,
-  "definitionFile": "agents/react-frontend/agent.json",
-  "supportedAgents": ["kiro-cli"],
-  "skillIds": ["react-project-init"],
-  "helperTools": []
-}

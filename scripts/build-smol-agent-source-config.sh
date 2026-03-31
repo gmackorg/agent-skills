@@ -8,33 +8,23 @@ output_file="${1:-$root/catalog/smol-agent.reference.json}"
 jq '
   {
     sourceCatalog: {
-      "agent-skills": {
+      "agent-skills-reference": {
         url: "https://github.com/gmackorg/agent-skills",
-        label: "Gmackorg Agent Skills"
+        label: "Gmackorg Agent Skills Reference"
       }
     },
     sources: [
-      { alias: "agent-skills" }
+      { alias: "agent-skills-reference" }
     ],
     groups: (
       reduce .groups[] as $group
         ({};
-         .[$group.name] = ($group.skillIds | map("agent-skills:" + .)))
+         .[$group.name] = ($group.skillIds | map("agent-skills-reference:" + .)))
     ),
     agentDefinitions: {
       general: {
         sourceIds: [],
-        defaultGroups: ["workflow-meta"],
-        allowedArtifacts: []
-      },
-      mobile: {
-        sourceIds: [],
-        defaultGroups: ["workflow-meta", "mobile-qa", "expo"],
-        allowedArtifacts: []
-      },
-      web: {
-        sourceIds: [],
-        defaultGroups: ["workflow-meta", "react", "nextjs-saas", "cloudflare", "observability"],
+        defaultGroups: ["examples"],
         allowedArtifacts: []
       }
     },

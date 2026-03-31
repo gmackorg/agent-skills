@@ -1,94 +1,26 @@
 {
   "sourceCatalog": {
-    "agent-skills": {
+    "agent-skills-reference": {
       "url": "https://github.com/gmackorg/agent-skills",
-      "label": "Gmackorg Agent Skills"
+      "label": "Gmackorg Agent Skills Reference"
     }
   },
   "sources": [
     {
-      "alias": "agent-skills"
+      "alias": "agent-skills-reference"
     }
   ],
   "groups": {
-    "workflow-meta": [
-      "agent-skills:agent-skills-catalog-maintenance",
-      "agent-skills:llm-session-retrospective",
-      "agent-skills:local-agent-context-discovery",
-      "agent-skills:x402-smol-agent-workflow"
-    ],
-    "mobile-qa": [
-      "agent-skills:maestro-qa-report",
-      "agent-skills:maestro-qa",
-      "agent-skills:react-native-expo-release-readiness"
-    ],
-    "expo": [
-      "agent-skills:expo-build-validation",
-      "agent-skills:expo-build-submit"
-    ],
-    "react": [
-      "agent-skills:react-project-init",
-      "agent-skills:react-debugging-advanced",
-      "agent-skills:react-ui-shadcn-tailwind"
-    ],
-    "nextjs-saas": [
-      "agent-skills:nextjs-project-init",
-      "agent-skills:stripe-payments-integration",
-      "agent-skills:saas-turbo-bootstrap",
-      "agent-skills:migrate-to-vinext",
-      "agent-skills:nextjs-cloudflare-opennext",
-      "agent-skills:vinext-cloudflare-hardening"
-    ],
-    "cloudflare": [
-      "agent-skills:cloudflare-workers-bindings-local-dev",
-      "agent-skills:cloudflare-d1-development"
-    ],
-    "observability": [
-      "agent-skills:sentry-release-triage",
-      "agent-skills:posthog-product-instrumentation"
-    ],
-    "infrastructure": [
-      "agent-skills:hetzner-cloud-ops",
-      "agent-skills:namecheap-domain-dns-ops"
-    ],
-    "unity": [
-      "agent-skills:unity-project-setup",
-      "agent-skills:unity-scripting-advanced",
-      "agent-skills:unity-debug-workflow"
-    ],
-    "esp32": [
-      "agent-skills:esp32-project-init",
-      "agent-skills:esp32-wifi-setup"
-    ],
-    "naming": [
-      "agent-skills:brand-domain-naming"
+    "examples": [
+      "agent-skills-reference:example-reference-skill",
+      "agent-skills-reference:reference-layout-audit"
     ]
   },
   "agentDefinitions": {
     "general": {
       "sourceIds": [],
       "defaultGroups": [
-        "workflow-meta"
-      ],
-      "allowedArtifacts": []
-    },
-    "mobile": {
-      "sourceIds": [],
-      "defaultGroups": [
-        "workflow-meta",
-        "mobile-qa",
-        "expo"
-      ],
-      "allowedArtifacts": []
-    },
-    "web": {
-      "sourceIds": [],
-      "defaultGroups": [
-        "workflow-meta",
-        "react",
-        "nextjs-saas",
-        "cloudflare",
-        "observability"
+        "examples"
       ],
       "allowedArtifacts": []
     }

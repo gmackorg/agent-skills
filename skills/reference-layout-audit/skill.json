@@ -1,0 +1,13 @@
+{
+  "id": "reference-layout-audit",
+  "kind": "skill",
+  "version": 1,
+  "runtimePackages": ["bash", "jq"],
+  "supportedAgents": ["codex", "claude-code"],
+  "helperTools": [],
+  "mcpServers": [],
+  "outputs": {
+    "skillPath": "skills/reference-layout-audit",
+    "skillFile": "skills/reference-layout-audit/SKILL.md"
+  }
+}

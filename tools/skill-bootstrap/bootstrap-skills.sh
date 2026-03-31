@@ -3,7 +3,7 @@ set -euo pipefail
 
 source_ref="${1:-}"
 
-if [[ -z "${source_ref}" ]]; then
+if [[ -z "$source_ref" ]]; then
   echo "usage: skill-bootstrap <repo-or-path> [skill-id ...]" >&2
   exit 1
 fi

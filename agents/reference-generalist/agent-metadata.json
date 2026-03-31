@@ -1,0 +1,9 @@
+{
+  "id": "reference-generalist",
+  "kind": "agent",
+  "version": 1,
+  "definitionFile": "agents/reference-generalist/agent.json",
+  "supportedAgents": ["kiro-cli", "smol-agent"],
+  "skillIds": ["example-reference-skill", "reference-layout-audit"],
+  "helperTools": []
+}

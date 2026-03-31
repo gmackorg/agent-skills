@@ -1,5 +1,5 @@
 {
-  description = "Custom agent skills, agents, and helper tooling";
+  description = "Reference implementation of an agent-skills repo";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -76,9 +76,7 @@
             agentMetadataPaths);
     in
     {
-      inherit skillMetadata;
-      inherit toolMetadata;
-      inherit agentMetadata;
+      inherit skillMetadata toolMetadata agentMetadata;
 
       homeManagerModules.default = import ./nix/home-manager-module.nix { inherit self inputs; };
 

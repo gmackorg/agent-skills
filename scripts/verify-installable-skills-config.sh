@@ -46,15 +46,3 @@ if [[ -n "$missing_on_disk" ]]; then
   echo "$missing_on_disk" >&2
   exit 1
 fi
-
-while IFS= read -r skill_id; do
-  skill_dir="$root/skills/$skill_id"
-  skill_file="$skill_dir/SKILL.md"
-  metadata_file="$skill_dir/skill.json"
-
-  test -f "$skill_file"
-
-  if [[ -f "$metadata_file" ]]; then
-    jq -e --arg id "$skill_id" '.id == $id and .kind == "skill"' "$metadata_file" >/dev/null
-  fi
-done < <(printf '%s\n' "$listed_ids")

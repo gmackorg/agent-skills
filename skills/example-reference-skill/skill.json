@@ -1,0 +1,13 @@
+{
+  "id": "example-reference-skill",
+  "kind": "skill",
+  "version": 1,
+  "runtimePackages": ["bash"],
+  "supportedAgents": ["codex", "claude-code"],
+  "helperTools": [],
+  "mcpServers": [],
+  "outputs": {
+    "skillPath": "skills/example-reference-skill",
+    "skillFile": "skills/example-reference-skill/SKILL.md"
+  }
+}

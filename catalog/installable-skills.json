@@ -2,88 +2,10 @@
   "version": 1,
   "groups": [
     {
-      "name": "workflow-meta",
+      "name": "examples",
       "skillIds": [
-        "agent-skills-catalog-maintenance",
-        "llm-session-retrospective",
-        "local-agent-context-discovery",
-        "x402-smol-agent-workflow"
-      ]
-    },
-    {
-      "name": "mobile-qa",
-      "skillIds": [
-        "maestro-qa-report",
-        "maestro-qa",
-        "react-native-expo-release-readiness"
-      ]
-    },
-    {
-      "name": "expo",
-      "skillIds": [
-        "expo-build-validation",
-        "expo-build-submit"
-      ]
-    },
-    {
-      "name": "react",
-      "skillIds": [
-        "react-project-init",
-        "react-debugging-advanced",
-        "react-ui-shadcn-tailwind"
-      ]
-    },
-    {
-      "name": "nextjs-saas",
-      "skillIds": [
-        "nextjs-project-init",
-        "stripe-payments-integration",
-        "saas-turbo-bootstrap",
-        "migrate-to-vinext",
-        "nextjs-cloudflare-opennext",
-        "vinext-cloudflare-hardening"
-      ]
-    },
-    {
-      "name": "cloudflare",
-      "skillIds": [
-        "cloudflare-workers-bindings-local-dev",
-        "cloudflare-d1-development"
-      ]
-    },
-    {
-      "name": "observability",
-      "skillIds": [
-        "sentry-release-triage",
-        "posthog-product-instrumentation"
-      ]
-    },
-    {
-      "name": "infrastructure",
-      "skillIds": [
-        "hetzner-cloud-ops",
-        "namecheap-domain-dns-ops"
-      ]
-    },
-    {
-      "name": "unity",
-      "skillIds": [
-        "unity-project-setup",
-        "unity-scripting-advanced",
-        "unity-debug-workflow"
-      ]
-    },
-    {
-      "name": "esp32",
-      "skillIds": [
-        "esp32-project-init",
-        "esp32-wifi-setup"
-      ]
-    },
-    {
-      "name": "naming",
-      "skillIds": [
-        "brand-domain-naming"
+        "example-reference-skill",
+        "reference-layout-audit"
       ]
     }
   ]

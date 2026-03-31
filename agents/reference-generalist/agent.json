@@ -1,0 +1,11 @@
+{
+  "name": "reference-generalist",
+  "description": "Example agent for the agent-skills reference repo",
+  "tools": ["fs_read", "fs_write", "execute_bash"],
+  "resources": [
+    "file://skills/example-reference-skill/SKILL.md",
+    "file://skills/reference-layout-audit/SKILL.md"
+  ],
+  "prompt": "You are an example agent used to demonstrate how an agent definition can reference skills from an agent-skills repo. Prefer concise explanations, load only the skills you need, and treat this repo as a reference contract rather than a production library.",
+  "model": "claude-sonnet-4"
+}
