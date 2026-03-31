@@ -1,6 +1,6 @@
 ---
 name: saas-turbo-bootstrap
-description: Bootstrap a complete SaaS application using Turborepo with Next.js backend, Expo mobile app, Clerk auth, Stripe payments, Turso database, Sentry monitoring, PostHog analytics, tRPC, and TanStack Query.
+description: Bootstrap a complete SaaS application using Turborepo with Next.js backend, Expo mobile app, an app-level auth layer, Stripe payments, Turso database, Sentry monitoring, PostHog analytics, tRPC, and TanStack Query.
 allowed-tools: fs_read fs_write execute_bash
 metadata:
   author: kiro-cli
@@ -99,7 +99,6 @@ npx create-next-app@latest . --typescript --tailwind --app --eslint
     "next": "14.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "@clerk/nextjs": "^4.27.0",
     "@trpc/server": "^10.45.0",
     "@trpc/client": "^10.45.0",
     "@trpc/next": "^10.45.0",
@@ -149,7 +148,6 @@ npx create-expo-app@latest . --template blank-typescript
     "expo": "~49.0.0",
     "react": "18.2.0",
     "react-native": "0.72.0",
-    "@clerk/clerk-expo": "^0.19.0",
     "@trpc/client": "^10.45.0",
     "@trpc/react-query": "^10.45.0",
     "@tanstack/react-query": "^5.0.0",
@@ -202,11 +200,12 @@ export * from './context';
 export type { AppRouter } from './router';
 
 // packages/api/src/context.ts
-import { auth } from '@clerk/nextjs';
+import { auth } from '../auth';
 import { db } from './db';
 
 export async function createContext() {
-  const { userId } = auth();
+  const session = await auth.api.getSession();
+  const userId = session?.user?.id ?? null;
   
   return {
     db,
@@ -234,7 +233,7 @@ export const appRouter = t.router({
   user: t.router({
     getProfile: protectedProcedure.query(async ({ ctx }) => {
       return await ctx.db.user.findUnique({
-        where: { clerkId: ctx.userId },
+        where: { authUserId: ctx.userId },
       });
     }),
     
@@ -245,7 +244,7 @@ export const appRouter = t.router({
       }))
       .mutation(async ({ ctx, input }) => {
         return await ctx.db.user.update({
-          where: { clerkId: ctx.userId },
+          where: { authUserId: ctx.userId },
           data: input,
         });
       }),
@@ -293,7 +292,7 @@ import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core';
 
 export const users = sqliteTable('users', {
   id: text('id').primaryKey(),
-  clerkId: text('clerk_id').unique().notNull(),
+  authUserId: text('auth_user_id').unique().notNull(),
   email: text('email').notNull(),
   name: text('name'),
   createdAt: integer('created_at', { mode: 'timestamp' }).notNull(),
@@ -331,10 +330,9 @@ export * from './schema';
 
 **Root .env.example:**
 ```env
-# Clerk
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
-CLERK_SECRET_KEY=sk_test_...
-CLERK_WEBHOOK_SECRET=whsec_...
+# Auth
+AUTH_SECRET=replace-me
+AUTH_URL=http://localhost:3000
 
 # Stripe
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
@@ -354,7 +352,7 @@ NEXT_PUBLIC_POSTHOG_KEY=phc_...
 NEXT_PUBLIC_POSTHOG_HOST=https://app.posthog.com
 
 # Expo
-EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
+EXPO_PUBLIC_AUTH_URL=http://localhost:3000
 EXPO_PUBLIC_API_URL=http://localhost:3000
 ```
 
@@ -519,7 +517,7 @@ eas build --profile preview
 - **Turbo cache issues**: Run `turbo clean` and restart
 - **Database connection fails**: Check Turso credentials and network
 - **tRPC type errors**: Ensure API package is built before web/mobile
-- **Clerk auth not working**: Verify environment variables and middleware
+- **Auth flow not working**: Verify your auth library configuration, session helpers, and middleware
 - **Stripe webhooks failing**: Check webhook endpoints and secrets
 - **Mobile app not connecting**: Verify API_URL points to correct backend
 - **Build failures**: Check workspace dependencies and TypeScript config

@@ -220,7 +220,7 @@ Why it should exist:
 
 - it replaces the current “everything bagel” role of `saas-turbo-bootstrap`
 - it can stay thin and route into narrower skills
-- it should target a better-auth-style auth layer instead of restoring Clerk-specific coupling
+- it should target a provider-neutral or better-auth-style auth layer instead of restoring vendor-specific coupling
 
 ### 2. `saas-stack-hardening`
 
@@ -237,17 +237,6 @@ Would compose:
 Why it should exist:
 
 - there is currently no public skill that reviews whether the core SaaS stack is coherent after initial setup
-
-### Auth follow-up
-
-Clerk is no longer part of the intended public skill surface.
-
-The remaining Clerk assumptions now live inside older legacy skills, especially:
-
-- [nextjs-project-init](/Volumes/dev/agent-skills/skills/nextjs-project-init/SKILL.md)
-- [saas-turbo-bootstrap](/Volumes/dev/agent-skills/skills/saas-turbo-bootstrap/SKILL.md)
-
-Those should be cleaned up as part of the broader Next / SaaS migration rather than replaced with another auth-vendor-specific public skill immediately.
 
 ### 3. `cloudflare-app-platform-readiness`
 

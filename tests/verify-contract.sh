@@ -7,6 +7,9 @@ metadata_file="$root/skills/expo-build-validation/skill.json"
 second_metadata_file="$root/skills/expo-build-submit/skill.json"
 validation_skill_file="$root/skills/expo-build-validation/SKILL.md"
 submit_skill_file="$root/skills/expo-build-submit/SKILL.md"
+nextjs_project_init_skill_file="$root/skills/nextjs-project-init/SKILL.md"
+saas_turbo_bootstrap_skill_file="$root/skills/saas-turbo-bootstrap/SKILL.md"
+stripe_skill_file="$root/skills/stripe-payments-integration/SKILL.md"
 validation_reference_file="$root/skills/expo-build-validation/references/release-validation-checklist.md"
 submit_reference_file="$root/skills/expo-build-submit/references/submission-sequence.md"
 installable_config_file="$root/catalog/installable-skills.json"
@@ -25,6 +28,9 @@ test -f "$metadata_file"
 test -f "$second_metadata_file"
 test -f "$validation_skill_file"
 test -f "$submit_skill_file"
+test -f "$nextjs_project_init_skill_file"
+test -f "$saas_turbo_bootstrap_skill_file"
+test -f "$stripe_skill_file"
 test -f "$validation_reference_file"
 test -f "$submit_reference_file"
 test -f "$installable_config_file"
@@ -63,6 +69,21 @@ fi
 
 if rg -q '^(allowed-tools|metadata):' "$submit_skill_file"; then
   echo "expo-build-submit SKILL.md still contains legacy frontmatter" >&2
+  exit 1
+fi
+
+if rg -q 'Clerk|clerk' "$nextjs_project_init_skill_file"; then
+  echo "nextjs-project-init still contains Clerk-specific guidance" >&2
+  exit 1
+fi
+
+if rg -q 'Clerk|clerk' "$saas_turbo_bootstrap_skill_file"; then
+  echo "saas-turbo-bootstrap still contains Clerk-specific guidance" >&2
+  exit 1
+fi
+
+if rg -q 'Clerk|clerk' "$stripe_skill_file"; then
+  echo "stripe-payments-integration still contains Clerk-specific guidance" >&2
   exit 1
 fi
 

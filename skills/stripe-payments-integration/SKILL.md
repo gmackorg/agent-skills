@@ -41,14 +41,15 @@ export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 ```typescript
 // app/api/stripe/create-checkout/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '@clerk/nextjs';
 import { stripe } from '@/lib/stripe';
+import { auth } from '@/lib/auth';
 import { db } from '@/lib/db';
 
 export async function POST(req: NextRequest) {
   try {
-    const { userId } = auth();
-    if (!userId) {
+    const session = await auth.api.getSession({ headers: req.headers });
+    const userId = session?.user?.id;
+    if (!session || !userId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -56,18 +57,18 @@ export async function POST(req: NextRequest) {
 
     // Get or create Stripe customer
     let customer = await db.user.findUnique({
-      where: { clerkId: userId },
+      where: { authUserId: userId },
       select: { stripeCustomerId: true, email: true },
     });
 
     if (!customer?.stripeCustomerId) {
       const stripeCustomer = await stripe.customers.create({
         email: customer?.email,
-        metadata: { clerkId: userId },
+        metadata: { authUserId: userId },
       });
 
       await db.user.update({
-        where: { clerkId: userId },
+        where: { authUserId: userId },
         data: { stripeCustomerId: stripeCustomer.id },
       });
 
@@ -264,7 +265,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
 
   // Update user's subscription status
   await db.user.update({
-    where: { clerkId: userId },
+    where: { authUserId: userId },
     data: { 
       stripeCustomerId: session.customer as string,
       subscriptionStatus: 'active',
@@ -277,7 +278,7 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
   
   if (customer.deleted) return;
 
-  const userId = customer.metadata?.clerkId;
+  const userId = customer.metadata?.authUserId;
   if (!userId) return;
 
   await db.subscription.upsert({
@@ -307,19 +308,20 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
 ```typescript
 // app/api/stripe/create-portal/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '@clerk/nextjs';
 import { stripe } from '@/lib/stripe';
+import { auth } from '@/lib/auth';
 import { db } from '@/lib/db';
 
 export async function POST(req: NextRequest) {
   try {
-    const { userId } = auth();
-    if (!userId) {
+    const session = await auth.api.getSession({ headers: req.headers });
+    const userId = session?.user?.id;
+    if (!session || !userId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const user = await db.user.findUnique({
-      where: { clerkId: userId },
+      where: { authUserId: userId },
       select: { stripeCustomerId: true },
     });
 
@@ -535,14 +537,15 @@ export function SubscriptionStatus() {
 ```typescript
 // app/api/stripe/usage/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '@clerk/nextjs';
 import { stripe } from '@/lib/stripe';
+import { auth } from '@/lib/auth';
 import { db } from '@/lib/db';
 
 export async function POST(req: NextRequest) {
   try {
-    const { userId } = auth();
-    if (!userId) {
+    const session = await auth.api.getSession({ headers: req.headers });
+    const userId = session?.user?.id;
+    if (!session || !userId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 

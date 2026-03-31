@@ -1,6 +1,6 @@
 ---
 name: nextjs-project-init
-description: Initialize a production-ready Next.js web application with TypeScript, Clerk authentication, Stripe payments, and database setup. Use when creating SaaS applications, e-commerce sites, or full-stack web applications.
+description: Initialize a production-ready Next.js web application with TypeScript, an application auth layer, Stripe payments, and database setup. Use when creating SaaS applications, e-commerce sites, or full-stack web applications.
 allowed-tools: fs_read fs_write execute_bash
 metadata:
   author: kiro-cli
@@ -21,15 +21,14 @@ cd my-app
 
 2. **Install core dependencies**
 ```bash
-npm install @clerk/nextjs stripe prisma @prisma/client
+npm install stripe prisma @prisma/client
 npm install -D prisma
 ```
 
 3. **Set up environment variables**
 Create `.env.local`:
 ```env
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
-CLERK_SECRET_KEY=sk_test_...
+AUTH_SECRET=replace-me
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
 STRIPE_SECRET_KEY=sk_test_...
 STRIPE_WEBHOOK_SECRET=whsec_...
@@ -37,31 +36,41 @@ DATABASE_URL="postgresql://user:password@localhost:5432/mydb"
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 ```
 
-4. **Configure Clerk authentication**
+4. **Configure your auth layer**
 Create `src/middleware.ts`:
 ```typescript
-import { authMiddleware } from "@clerk/nextjs";
+import { auth } from "@/lib/auth";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-export default authMiddleware({
-  publicRoutes: ["/", "/api/webhooks/stripe"],
-});
+const publicPaths = new Set(["/", "/pricing"]);
+
+export async function middleware(req: NextRequest) {
+  const session = await auth.api.getSession({ headers: req.headers });
+
+  if (!session && !publicPaths.has(req.nextUrl.pathname) && !req.nextUrl.pathname.startsWith("/api/webhooks/stripe")) {
+    return NextResponse.redirect(new URL("/sign-in", req.url));
+  }
+
+  return NextResponse.next();
+}
 
 export const config = {
   matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
 };
 ```
 
+Create `src/lib/auth.ts` using your preferred auth stack such as `better-auth`.
+
 Update `src/app/layout.tsx`:
 ```typescript
-import { ClerkProvider } from '@clerk/nextjs';
+import type { ReactNode } from "react";
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body>{children}</body>
-      </html>
-    </ClerkProvider>
+    <html lang="en">
+      <body>{children}</body>
+    </html>
   );
 }
 ```
@@ -84,7 +93,7 @@ datasource db {
 
 model User {
   id        String   @id @default(cuid())
-  clerkId   String   @unique
+  authUserId String  @unique
   email     String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -130,12 +139,16 @@ if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = db;
 7. **Create authentication pages**
 Create `src/app/sign-in/[[...sign-in]]/page.tsx`:
 ```typescript
-import { SignIn } from "@clerk/nextjs";
+import Link from "next/link";
 
 export default function Page() {
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <SignIn />
+    <div className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-4 p-8 text-center">
+      <h1 className="text-2xl font-semibold">Sign in</h1>
+      <p>Wire this page to your auth layer or redirect into your auth provider.</p>
+      <Link className="rounded bg-black px-4 py-2 text-white" href="/api/auth/sign-in">
+        Continue
+      </Link>
     </div>
   );
 }
@@ -144,17 +157,19 @@ export default function Page() {
 8. **Create dashboard page**
 Create `src/app/dashboard/page.tsx`:
 ```typescript
-import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
+import { auth } from "@/lib/auth";
 
 export default async function DashboardPage() {
-  const user = await currentUser();
-  if (!user) redirect("/sign-in");
+  const session = await auth.api.getSession({
+    headers: new Headers(),
+  });
+  if (!session) redirect("/sign-in");
 
   return (
     <div className="container mx-auto p-8">
       <h1 className="text-3xl font-bold">Dashboard</h1>
-      <p className="mt-4">Welcome, {user.firstName}!</p>
+      <p className="mt-4">Welcome back.</p>
     </div>
   );
 }
@@ -171,9 +186,9 @@ npm run dev
 ```bash
 npx create-next-app@latest my-saas --typescript --tailwind --app
 cd my-saas
-npm install @clerk/nextjs stripe prisma @prisma/client
+npm install stripe prisma @prisma/client
 npx prisma init
-# Configure .env.local with keys
+# Configure .env.local with auth, Stripe, and database settings
 npm run dev
 ```
 
@@ -181,14 +196,14 @@ npm run dev
 ```bash
 pnpm create next-app my-app --typescript --tailwind --app
 cd my-app
-pnpm add @clerk/nextjs stripe @prisma/client
+pnpm add stripe @prisma/client
 pnpm add -D prisma
 pnpm dev
 ```
 
 ## Troubleshooting
 
-- **Clerk middleware not working**: Verify middleware.ts in src/ directory, check environment variables
+- **Auth middleware not working**: Verify your auth helper, middleware path, and session-reading logic
 - **Prisma client not found**: Run `npx prisma generate`
 - **Database connection fails**: Verify DATABASE_URL format, ensure database is running
 - **Stripe keys not working**: Verify test keys (pk_test_, sk_test_), restart dev server
