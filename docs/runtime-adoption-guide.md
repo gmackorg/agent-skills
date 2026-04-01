@@ -37,6 +37,7 @@ Runtimes should import, install, or index the repo. They should not fork the ski
 
 - keep OpenClaw integration thin
 - adapt this repo through an `openclawPlugin` output or a companion plugin repo
+- expose only selected skill directories and packages
 - avoid making the content layer OpenClaw-specific
 
 ### Other Tools

@@ -23,6 +23,7 @@ Use this repo to copy the contract:
 - an example of metadata-backed skills and agents
 - an example of Nix / Home Manager packaging
 - an example of a small `smol-agent` source catalog
+- an example of an OpenClaw plugin surface
 
 ## What This Repo Is Not
 
@@ -88,5 +89,6 @@ flake.nix
 - [reference-branch-model.md](/Users/mackieg/.config/superpowers/worktrees/agent-skills/gmackorg-reference-skeleton/docs/reference-branch-model.md)
 - [runtime-integration-model.md](/Users/mackieg/.config/superpowers/worktrees/agent-skills/gmackorg-reference-skeleton/docs/runtime-integration-model.md)
 - [runtime-adoption-guide.md](/Users/mackieg/.config/superpowers/worktrees/agent-skills/gmackorg-reference-skeleton/docs/runtime-adoption-guide.md)
+- [openclaw-plugin-example.md](/Users/mackieg/.config/superpowers/worktrees/agent-skills/gmackorg-reference-skeleton/docs/openclaw-plugin-example.md)
 - [skill-metadata-contract.md](/Users/mackieg/.config/superpowers/worktrees/agent-skills/gmackorg-reference-skeleton/docs/skill-metadata-contract.md)
 - [nix-consumption-example.md](/Users/mackieg/.config/superpowers/worktrees/agent-skills/gmackorg-reference-skeleton/docs/nix-consumption-example.md)

@@ -22,6 +22,8 @@ agent_metadata_file="$root/agents/reference-generalist/agent-metadata.json"
 agent_definition_file="$root/agents/reference-generalist/agent.json"
 branch_model_doc="$root/docs/reference-branch-model.md"
 runtime_adoption_doc="$root/docs/runtime-adoption-guide.md"
+openclaw_plugin_doc="$root/docs/openclaw-plugin-example.md"
+agents_doc="$root/AGENTS.md"
 
 test -f "$example_skill"
 test -f "$example_metadata"
@@ -42,6 +44,8 @@ test -f "$agent_metadata_file"
 test -f "$agent_definition_file"
 test -f "$branch_model_doc"
 test -f "$runtime_adoption_doc"
+test -f "$openclaw_plugin_doc"
+test -f "$agents_doc"
 
 grep -q '^name: example-reference-skill$' "$example_skill"
 grep -q '^name: reference-layout-audit$' "$audit_skill"
@@ -68,3 +72,7 @@ jq -e '
   .definitionFile == "agents/reference-generalist/agent.json" and
   (.skillIds | index("example-reference-skill")) != null
 ' "$agent_metadata_file" >/dev/null
+
+grep -q 'openclawPlugin =' "$flake_file"
+grep -q 'name = "agent-skills-reference"' "$flake_file"
+nix eval --impure --raw "$root#openclawPlugin.name" | grep -qx 'agent-skills-reference'

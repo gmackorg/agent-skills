@@ -80,6 +80,21 @@
 
       homeManagerModules.default = import ./nix/home-manager-module.nix { inherit self inputs; };
 
+      openclawPlugin = {
+        name = "agent-skills-reference";
+        skills = [
+          ./skills/example-reference-skill
+          ./skills/reference-layout-audit
+        ];
+        packages = [ ];
+        needs = {
+          stateDirs = [
+            ".local/share/agent-skills"
+          ];
+          requiredEnv = [ ];
+        };
+      };
+
       packages = lib.genAttrs supportedSystems
         (system:
           let
